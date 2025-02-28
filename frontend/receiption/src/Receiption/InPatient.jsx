@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import 'dotenv/config';
 
 const InPatient = () => {
     const [form, setForm] = useState({
@@ -30,7 +31,7 @@ const InPatient = () => {
     // Fetch Data on Component Mount
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/inpatient/gaip/");
+        const response = await axios.get(process.env.VITE_BACKEND_URL+"api/inpatient/gaip/");
         setEntries(response.data);
         setFilteredPatients(response.data);
       } catch (error) {
@@ -52,12 +53,12 @@ const InPatient = () => {
       e.preventDefault();
   
       if (updateId) {
-        await axios.put(`http://localhost:5000/api/inpatient/uip/${updateId}`, form);
+        await axios.put(process.env.VITE_BACKEND_URL+`api/inpatient/uip/${updateId}`, form);
         setUpdateId(null);
       } else {
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/inpatient/pip", 
+            process.env.VITE_BACKEND_URL+ "api/inpatient/pip", 
             form, 
             { headers: { "Content-Type": "application/json" } }
           );
@@ -100,7 +101,7 @@ const InPatient = () => {
   
     // Handle Delete
     const handleDelete = async (id) => {
-      await axios.delete(`http://localhost:5000/api/inpatient/dip/${id}`);
+      await axios.delete(process.env.VITE_BACKEND_URL+`api/inpatient/dip/${id}`);
       getData();
     };
     

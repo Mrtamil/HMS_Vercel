@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import 'dotenv/config';
 
 const OutPatient = () => {
     const [form, setForm] = useState({
@@ -26,7 +27,7 @@ const OutPatient = () => {
     // Fetch Data on Component Mount
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/outpatient/gaop/");
+        const response = await axios.get(process.env.VITE_BACKEND_URL+"api/outpatient/gaop/");
         setEntries(response.data);
         setFilteredPatients(response.data);
       } catch (error) {
@@ -49,12 +50,12 @@ const OutPatient = () => {
       e.preventDefault();
   
       if (updateId) {
-        await axios.put(`http://localhost:5000/api/outpatient/uop/${updateId}`, form);
+        await axios.put(process.env.VITE_BACKEND_URL+`api/outpatient/uop/${updateId}`, form);
         setUpdateId(null);
       } else {
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/outpatient/pop", 
+            process.env.VITE_BACKEND_URL+"api/outpatient/pop", 
             form, 
             { headers: { "Content-Type": "application/json" } }
           );
@@ -93,7 +94,7 @@ const OutPatient = () => {
   
     // Handle Delete
     const handleDelete = async (id) => {
-      await axios.delete(`http://localhost:5000/api/outpatient/dop/${id}`);
+      await axios.delete(process.env.VITE_BACKEND_URL+`api/outpatient/dop/${id}`);
       getData();
     };
     

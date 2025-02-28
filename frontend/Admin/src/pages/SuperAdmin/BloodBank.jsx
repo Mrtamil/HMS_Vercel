@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { AppContext } from '../../context/AppContext'
-import { AdminContext } from '../../context/AdminContext'
+import 'dotenv/config';
+
 
 const Drugs = () => {
 
@@ -26,7 +26,7 @@ const Drugs = () => {
   // Fetch Data on Component Mount
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/bloodbank/gab/");
+      const response = await axios.get(process.env.VITE_BACKEND_URL+"api/bloodbank/gab/");
       setEntries(response.data);
       setFilteredPatients(response.data);
     } catch (error) {
@@ -64,12 +64,12 @@ const Drugs = () => {
     e.preventDefault();
 
     if (updateId) {
-      await axios.put(`http://localhost:5000/api/bloodbank/ub/${updateId}`, form);
+      await axios.put(process.env.VITE_BACKEND_URL+`api/bloodbank/ub/${updateId}`, form);
       setUpdateId(null);
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/bloodbank/pb", 
+          process.env.VITE_BACKEND_URL+"api/bloodbank/pb", 
           form, 
           { headers: { "Content-Type": "application/json" } }
         );
@@ -103,7 +103,7 @@ const Drugs = () => {
 
   // Handle Delete
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/bloodbank/db/${id}`);
+    await axios.delete(process.env.VITE_BACKEND_URL+`api/bloodbank/db/${id}`);
     getData();
   };
   

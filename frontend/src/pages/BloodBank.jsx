@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import 'dotenv/config';
+
 
 
 const BloodBankDashboard = () => {
@@ -7,7 +9,7 @@ const BloodBankDashboard = () => {
   const [bloods, setBloods] = useState([]);
 
   useEffect(() => {
-      axios.get("http://localhost:5000/api/bloodbank/gab/")
+      axios.get(process.env.VITE_BACKEND_URL+"api/bloodbank/gab/")
           .then(res => setBloods(res.data)) 
           .catch(err => console.error(err));
   }, []);

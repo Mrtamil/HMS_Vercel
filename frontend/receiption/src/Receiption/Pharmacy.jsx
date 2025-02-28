@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-
+import 'dotenv/config';
 
 const Drugs = () => {
 
@@ -8,7 +8,7 @@ const Drugs = () => {
   const [medicines, setMedicines] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/pharmecy/gap/")
+    axios.get(process.env.VITE_BACKEND_URL+"api/pharmecy/gap/")
     .then(res => setMedicines(res.data))
     .catch(e => console.error(e))
   }, []);
@@ -17,14 +17,6 @@ const Drugs = () => {
     <div className="flex h-screen w-screen">
       <main className="flex-auto bg-gray-100 p-5">
         <h1 className="text-2xl font-semibold">Medicines</h1>
-
-        {/* <input
-          type="text"
-          placeholder="Search by Drug Id or Drug Name"
-          value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border rounded w-full mt-4 mb-4"
-        /> */}
 
       
 
